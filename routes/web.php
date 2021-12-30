@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CategoryController;
 use App\Models\User;
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $users = User::all();
     return view('dashboard' , compact('users'));
 })->name('dashboard');
+
+//category controller
+Route::get('/all-category', [CategoryController::class ,'index'])->name('all-category');
+Route::get('/add-category', [CategoryController::class ,'create'])->name('add-category');
+Route::post('/store-category', [CategoryController::class ,'store'])->name('store-category');
