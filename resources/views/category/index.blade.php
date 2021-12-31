@@ -24,14 +24,19 @@
                           </tr>
                         </thead>
                         <tbody>
-                         
+                          @php
+                            $i = 1;
+                          @endphp
+                         @foreach ($category as $category )
                           <tr>
-                            <th scope="row"></th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <th scope="row">{{ $i++ }}</th>
+                            <td>{{ $category->user_id }}</td>
+                            <td>{{ $category->category_name }}</td>
+                            <td>{{ $category->created_at }}</td>
                           </tr>
-                           </tbody>
+                         @endforeach
+                          
+                        </tbody>
                       </table>
                 </div>
             </div>
