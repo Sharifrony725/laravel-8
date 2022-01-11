@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use Auth;
 use Illuminate\Support\Carbon;
@@ -16,8 +17,17 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
-        return view('category.index',compact('category'));
+      // Query Builder
+        /*
+        *  $categories = DB::table('categories')
+        * ->join('users','categories.user_id','users.id')
+        * ->select('categories.*' ,'users.name')
+        * ->latest()
+        * ->paginate(5);
+        */
+     // Elequent ORM
+        $categories = Category::latest()->paginate(5);
+        return view('category.index',compact('categories'));
     }
 
     /**
@@ -76,7 +86,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::find($id);
+        return view('category.edit',compact('categories'));
     }
 
     /**
@@ -88,7 +99,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = Category::find($id)->update([
+            'category_name' => $request->category_name,
+            'user_id' => Auth::user()->id
+        ]);
+        return Redirect()->route('all-category')->with('success','Category Update Successfully!');
     }
 
     /**

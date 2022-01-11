@@ -18,27 +18,39 @@
                         <thead>
                           <tr>
                             <th scope="col">SL NO</th>
-                            <th scope="col">User Id</th>
                             <th scope="col">Category Name</th>
+                            <th scope="col">User</th>
                             <th scope="col">Create At</th>
+                            <th scope="col">Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          @php
+                          {{-- @php
                             $i = 1;
-                          @endphp
-                         @foreach ($category as $category )
+                          @endphp --}}
+                         @foreach ($categories as $category )
                           <tr>
-                            <th scope="row">{{ $i++ }}</th>
-                            <td>{{ $category->user_id }}</td>
+                            <th scope="row">{{  $categories->firstItem() + $loop->index }}</th>
                             <td>{{ $category->category_name }}</td>
-                            <td>{{ $category->created_at }}</td>
+                            <td>{{ $category->user->name }}</td>
+                            <td>
+                              @if($category->created_at == NULL)
+                              <span class="text-danger">No Date Set</span>
+                              @else
+                              {{ $category->created_at->diffForHumans() }}
+                              @endif
+                            </td>
+                            <td>
+                              <a href="{{ url('category/edit/'.$category->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                              <a href="" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
                           </tr>
                          @endforeach
                           
                         </tbody>
                       </table>
-                </div>
+                      {{ $categories->links() }}
+                    </div>
             </div>
         </div>
     </div>
