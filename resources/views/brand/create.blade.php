@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-           Edit Categories
-           <a style="float: right" href="{{ route('all-category') }}" class="btn btn-primary">All Categories</a>
+           Add Brand
+           <a style="float: right" href="{{ route('all-brand') }}" class="btn btn-primary">All Brands</a>
         </h2>
 
     </x-slot>
@@ -10,7 +10,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-               
+
             </div>
             <div class="container">
                 <div class="row">
@@ -21,28 +21,38 @@
                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                            <span aria-hidden="true">&times;</span>
                          </button>
-                    </div> 
+                    </div>
                     @endif
-                   
+
 
                     <div class="col-md-6">
-                        <form method="POST" action="{{ url('update-category/'.$categories->id) }}">
+                        <form method="POST" action="{{ route('store-brand') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                              <label for="exampleInputEmail1">Category Name</label>
+                              <label for="exampleInputEmail1">Brand Name</label>
                               <br>
-                              <input type="text" class="form-control" id="exampleInputEmail1" name="category_name" aria-describedby="emailHelp" value="{{ $categories->category_name }}">
+                              <input type="text" class="form-control" id="exampleInputEmail1" name="brand_name" aria-describedby="emailHelp" placeholder="Enter brand name">
 
-                              @error('category_name')
+                              @error('brand_name')
+                                  <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                            </div>
+
+                            <div class="form-group mt-4">
+                              <label for="exampleInputEmail1">Brand Image</label>
+                              <br>
+                              <input type="file" class="form-control" id="exampleInputEmail1" name="brand_img" aria-describedby="emailHelp">
+
+                              @error('brand_img')
                                   <span class="text-danger">{{ $message }}</span>
                               @enderror
                             </div>
                            <br>
-                            <button type="submit" class="btn btn-primary">Update Category</button>
+                            <button type="submit" class="btn btn-primary">Add Brand</button>
                           </form>
-                    </div> 
+                    </div>
                     <div class="col-md-3"></div>
-                   
+
                 </div>
             </div>
         </div>

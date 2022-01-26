@@ -27,7 +27,8 @@ class CategoryController extends Controller
         */
      // Elequent ORM
         $categories = Category::latest()->paginate(5);
-        return view('category.index',compact('categories'));
+        $softDelete = Category::onlyTrashed()->latest()->paginate(3);
+        return view('category.index',compact('categories','softDelete'));
     }
 
     /**
@@ -112,8 +113,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function softDelete($id)
+    {
+        $softDelete = Category::find($id)->delete();
+        return Redirect()->back()->with('success','Category Softly Deleted!');
+    }
+
+    public function restore($id){
+        $restore = Category::withTrashed()->find($id)->restore();
+        return Redirect()->back()->with('success','Category Restore Successfully!');
+    }
+
     public function destroy($id)
     {
-        //
+        $permanetDelete = Category::onlyTrashed()->find($id)->forceDelete();
+        return Redirect()->back()->with('success','Category Permanent Delete Successfully');
     }
 }
